@@ -40,6 +40,8 @@ Requirements
 
 - Telegram Bot API token & chat ID
 
+- LM Studio for local LLM or open API from LLM provider
+
 # Steps
 1. Pull the Frontend:
 ```
