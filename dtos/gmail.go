@@ -4,6 +4,7 @@ import "go-mail/models"
 
 type EmailJob struct {
 	Preferences models.UserPreference `json:"preferences"`
+	ThreadID    string                `json:"threadId"`
 	Subject     string                `json:"subject"`
 	Body        string                `json:"body"`
 	Sender      string                `json:"sender"`

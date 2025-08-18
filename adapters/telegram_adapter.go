@@ -9,7 +9,7 @@ import (
 
 type TelegramAdapter interface {
 	IsValidChatBot(chatID string, botToken string) (bool, error)
-	SendEmailToTelegram(botToken, chatID, sender, subject string) error
+	SendEmailToTelegram(botToken, chatID, sender, subject, threadId string) error
 }
 
 type telegramAdapter struct{}
@@ -32,13 +32,14 @@ func (t *telegramAdapter) IsValidChatBot(chatID string, botToken string) (bool, 
 	return false, fmt.Errorf("invalid chatID or botToken: %s", string(body))
 }
 
-func (t *telegramAdapter) SendEmailToTelegram(botToken, chatID, sender, subject string) error {
+func (t *telegramAdapter) SendEmailToTelegram(botToken, chatID, sender, subject, threadId string) error {
 	apiURL := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", botToken)
 
 	message := fmt.Sprintf(
-		"*New Email Received*\n\n*From:* %s\n*Subject:* %s",
+		"*New Email Received*\n\n*From:* %s\n*Subject:* %s\n*Email Link:* %s\n\nYou can view the email in your Gmail account, and it is only accessible on a PC or laptop.",
 		sender,
 		subject,
+		fmt.Sprintf("https://mail.google.com/mail/u/0/#inbox/%s", threadId),
 	)
 
 	formData := url.Values{}

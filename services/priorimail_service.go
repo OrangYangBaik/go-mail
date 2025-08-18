@@ -87,6 +87,7 @@ func (s *priorimailService) ProcessEmails() []string {
 				}
 
 				for _, email := range emails {
+					threadId := email.ThreadID
 					subject := utils.GetHeader(email.Payload.Headers, "Subject")
 					from := utils.GetHeader(email.Payload.Headers, "From")
 					to := utils.ParseRecipients(utils.GetHeader(email.Payload.Headers, "To"))
@@ -96,6 +97,7 @@ func (s *priorimailService) ProcessEmails() []string {
 						Preferences: u,
 						Subject:     subject,
 						//Body:        body,
+						ThreadID:   threadId,
 						Sender:     from,
 						Recipients: to,
 					})
@@ -124,6 +126,7 @@ func (s *priorimailService) ProcessEmails() []string {
 				job.Preferences.TelegramChatID,
 				job.Sender,
 				job.Subject,
+				job.ThreadID,
 				// job.Body,
 			)
 			if err != nil {
